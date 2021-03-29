@@ -8,9 +8,11 @@
 import * as React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-
+import { theme } from "~theme"
 import Header from "./header"
+import Menu from "~components/Menu"
 import "./layout.css"
+import "~theme/styles.sass"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -42,6 +44,7 @@ const Layout = ({ children }) => {
           © {new Date().getFullYear()}, Built with
           {` `}
           <a href="https://www.gatsbyjs.com">Gatsby</a>
+          <Menu />
         </footer>
       </div>
     </>
