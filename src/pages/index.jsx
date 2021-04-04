@@ -120,7 +120,16 @@ const Page = () => {
       {page.body?.value && (
         <div dangerouslySetInnerHTML={{ __html: page.body.value }} />
       )}
-      <TilesWithLayout />
+      <Box
+        className="tiles-wrapper"
+        css={`
+          // opacity: 1;
+          // transition: opacity 100ms;
+          // opacity: ${modalStatus ? 0 : 1};
+        `}
+      >
+        <TilesWithLayout />
+      </Box>
       <Modal
         status={modalStatus}
         setStatus={setModalStatus}

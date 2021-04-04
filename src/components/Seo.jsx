@@ -9,6 +9,7 @@ import * as React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
+import { cleanString } from "~utils"
 
 function SEO({ seo }) {
   const { description, lang, meta, title } = seo
@@ -34,7 +35,7 @@ function SEO({ seo }) {
       htmlAttributes={{
         lang,
       }}
-      title={title}
+      title={cleanString(title)}
       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
       // meta={[
       //   {
