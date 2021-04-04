@@ -16,13 +16,14 @@ import "~theme/styles.sass"
 
 const { breakpoints, colors, space, fontSizes } = myTheme
 
-const Layout = ({ children, frontpage, seo }) => {
+const Layout = ({ children, frontpage, seo, modalStatus }) => {
   const location = useLocation()
   const { theme, switchTheme } = useContext(ThemeContext)
   const curTheme = location.pathname === "/" ? "theme-default" : "theme-yellow"
-  switchTheme(curTheme)
 
-  const [init, setInit] = useState(null)
+  if (typeof document !== "undefined") {
+    switchTheme(curTheme)
+  }
 
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -39,7 +40,7 @@ const Layout = ({ children, frontpage, seo }) => {
       <SEO seo={seo} />
       <Box
         className="body-wrapper"
-        css={`          font-size ${fontSizes.body};
+        css={`font-size ${fontSizes.body};
 
           @media (min-width: ${breakpoints.lg}px) {
             padding-left: 50px;
