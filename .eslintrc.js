@@ -11,6 +11,18 @@ module.exports = {
     react: {
       version: "detect",
     },
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx"],
+        paths: ["./src"],
+      },
+      alias: [
+        ["~components", "./src/components"],
+        ["~theme", "./src/theme"],
+        ["~static", "./static"],
+        ["~src", "./src"],
+      ],
+    },
   },
   env: {
     jest: true,
@@ -21,6 +33,7 @@ module.exports = {
   extends: [
     "airbnb",
     "eslint:recommended",
+    "plugin:import/react",
     "plugin:react/recommended",
     "plugin:prettier/recommended", // Make this the last element so prettier config overrides other formatting rules
   ],

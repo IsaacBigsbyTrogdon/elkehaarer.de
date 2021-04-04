@@ -8,13 +8,13 @@ import FilesList from "~components/FilesList"
 
 const Page = () => {
   const { page } = useStaticQuery(graphql`
-    query contactPageQuery {
+    query impressumPageQuery {
       site {
         siteMetadata {
           title
         }
       }
-      page: nodePage(drupal_internal__nid: { eq: 2 }) {
+      page: nodePage(drupal_internal__nid: { eq: 4 }) {
         title
         body {
           value
@@ -53,10 +53,6 @@ const Page = () => {
       })
     )
   }
-
-  const theme = useTheme()
-  let { breakpoints } = theme
-  breakpoints = breakpoints.values
 
   const seo = {
     title: page.title,

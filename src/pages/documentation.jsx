@@ -5,16 +5,19 @@ import styled from "styled-components"
 import { useTheme } from "@material-ui/core/styles"
 import Layout from "~components/Layout"
 import FilesList from "~components/FilesList"
+import { theme } from "~theme"
+
+const { breakpoints } = theme
 
 const Page = () => {
   const { page } = useStaticQuery(graphql`
-    query contactPageQuery {
+    query documentationPageQuery {
       site {
         siteMetadata {
           title
         }
       }
-      page: nodePage(drupal_internal__nid: { eq: 2 }) {
+      page: nodePage(drupal_internal__nid: { eq: 3 }) {
         title
         body {
           value
@@ -54,20 +57,28 @@ const Page = () => {
     )
   }
 
-  const theme = useTheme()
-  let { breakpoints } = theme
-  breakpoints = breakpoints.values
-
   const seo = {
     title: page.title,
   }
 
   return (
     <Layout seo={seo}>
-      {page.body?.value && (
-        <div dangerouslySetInnerHTML={{ __html: page.body.value }} />
-      )}
-      <FilesList files={getFiles() || []} />
+      <Box
+        width={3}
+        css={`
+          width: 75%;
+
+          li + li {
+            padding-top: 10px;
+          }
+
+          @media (min-width: ${breakpoints.sm}px) {
+            width: inherit;
+          }
+        `}
+      >
+        <FilesList files={getFiles() || []} />
+      </Box>
     </Layout>
   )
 }

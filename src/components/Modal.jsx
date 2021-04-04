@@ -3,10 +3,9 @@ import { makeStyles } from "@material-ui/core/styles"
 import Modal from "@material-ui/core/Modal"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 import { Box } from "theme-ui"
+import styled, { theme as myTheme } from "~theme"
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10
-}
+const { breakpoints, modalSizes } = myTheme
 
 function getModalStyle() {
   const top = 50
@@ -29,21 +28,24 @@ export default function Wrapper({
   const useStyles = makeStyles(theme => ({
     paper: {
       position: "absolute",
-      [theme.breakpoints.down("sm")]: {
-        width: "300px",
-      },
-      [theme.breakpoints.up("md")]: {
-        width: "600px",
+      maxWidth: `${modalSizes.sm.w}px`,
+      width: `${modalSizes.sm.w}px`,
+      [theme.breakpoints.up("768")]: {
+        maxWidth: `${modalSizes.md.w}px`,
+        width: `${modalSizes.md.w}px`,
+        height: "80%",
+        maxHeight: "80%",
       },
       [theme.breakpoints.up("lg")]: {
-        width: "800px",
+        maxWidth: `${modalSizes.lg.w}px`,
         height: "80%",
+        maxHeight: "80%",
       },
       backgroundColor: "#aaa",
       // maxHeight: "90%",
       // border: "2px solid #000",
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(4),
+      // padding: theme.spacing(4),
     },
   }))
 
@@ -59,21 +61,17 @@ export default function Wrapper({
       className={classes.paper}
       id="modal-wrapper"
       css={`
-        .slider {
-          margin: 0 auto;
-        }
-        .center {
-          display: table;
-        }
-        .center img {
-          display: table-cell;
-          margin: auto;
-        }
+        * {
+          max-height: 600px;
 
-        .slick-prev:before,
-        .slick-next:before {
-          color: black;
+          @media (min-width: ${breakpoints.md}px) {
+            max-height: 600px;
+          }
         }
+        // .slick-prev:before,
+        // .slick-next:before {
+        //   color: black;
+        // }
       `}
     >
       {children}

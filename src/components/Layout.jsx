@@ -1,20 +1,29 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
- */
-
-import * as React from "react"
+import React, { useContext, useState } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-import { theme } from "~theme"
-import Header from "./header"
-import Menu from "~components/Menu"
+import { ThemeContext } from "gatsby-plugin-theme-switcher"
+import { useLocation } from "@reach/router"
+import Header from "./Header"
+import Menu from "./Menu"
+import Switcher from "./Switcher"
+import { Box } from "~components/base"
+import styled, { theme as myTheme, themeGet } from "~theme"
+import SEO from "./Seo"
+
+import "normalize.css"
 import "./layout.css"
 import "~theme/styles.sass"
 
-const Layout = ({ children }) => {
+const { breakpoints, colors, space, fontSizes } = myTheme
+
+const Layout = ({ children, frontpage, seo }) => {
+  const location = useLocation()
+  const { theme, switchTheme } = useContext(ThemeContext)
+  const curTheme = location.pathname === "/" ? "theme-default" : "theme-yellow"
+  switchTheme(curTheme)
+
+  const [init, setInit] = useState(null)
+
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -27,26 +36,47 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
+      <SEO seo={seo} />
+      <Box
+        className="body-wrapper"
+        css={`          font-size ${fontSizes.body};
+
+          @media (min-width: ${breakpoints.lg}px) {
+            padding-left: 50px;
+          }
+        `}
       >
-        <main>{children}</main>
-        <footer
-          style={{
-            marginTop: `2rem`,
-          }}
+        <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
+        <Menu frontpage={frontpage} />
+
+        <Box
+          p={[3, 4]}
+          pt={[0, 0]}
+          className="main-content"
+          css={`
+            position: relative;
+            top: 70px;
+
+            @media (min-width: ${breakpoints.md}px) {
+              top: 100px;
+            }
+
+            @media (min-width: ${breakpoints.lg}px) {
+              top: 120px;
+            }
+          `}
         >
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
-          <Menu />
-        </footer>
-      </div>
+          <Box
+            as="main"
+            css={`
+              height: 100%;
+              padding-bottom: 50px;
+            `}
+          >
+            {children}
+          </Box>
+        </Box>
+      </Box>
     </>
   )
 }

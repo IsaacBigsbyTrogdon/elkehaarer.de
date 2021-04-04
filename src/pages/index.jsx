@@ -1,15 +1,16 @@
 import React, { createRef, useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { Box, Flex } from "theme-ui"
-import styled from "styled-components"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
-import { useTheme } from "@material-ui/core/styles"
+import ModalSlider from "~components/ModalSlider"
+import styled, { theme } from "~theme"
 import Tile from "~components/Tile"
 import Image from "~components/Image"
 import Layout from "../components/Layout"
-import SEO from "../components/seo"
 import Modal from "~components/Modal"
 import Slider from "~components/Slider"
+import { TilesSmall, TilesMedium, TilesLarge } from "~layouts"
+import { cleanString } from "~utils"
 
 const Page = () => {
   const { page } = useStaticQuery(graphql`
@@ -68,10 +69,11 @@ const Page = () => {
   const items = page.relationships?.items || []
 
   const [slideIndex, setSlideIndex] = React.useState(0)
+
   const [modalStatus, setModalStatus] = React.useState(false)
   const [modalContent, setModalContent] = React.useState(null)
 
-  const getTileData = () => {
+  const getTiles = () => {
     return items.map((item, key) => {
       const { cropped, image, modal } = item.relationships
 
@@ -82,166 +84,53 @@ const Page = () => {
         alt: item.image.alt,
       }
 
-      return (
+      return [
         <Tile
           index={key}
           key={item.id}
           data={tile}
           setSlideIndex={setSlideIndex}
           setModalStatus={setModalStatus}
-        />
-      )
+        />,
+        item.id,
+      ]
     })
   }
 
-  const theme = useTheme()
-  let { breakpoints } = theme
-  breakpoints = breakpoints.values
+  const { breakpoints } = theme
 
-  const tiles = getTileData()
+  const tiles = getTiles()
 
-  const TilesLarge = () => {
-    return (
-      <Flex className="tile-items">
-        <Flex
-          className="tile-items__part"
-          sx={{ flexWrap: "wrap" }}
-          css={`
-            width: 55%;
-          `}
-          pr={[3]}
-        >
-          <Box
-            className="tile-items__part-item"
-            css={`
-              width: 55%;
-            `}
-            pr={[3]}
-          >
-            {tiles[0]}
-            <Box
-              css={`
-                width: 55%;
-                margin-top: 70px;
-                float: right;
-              `}
-            >
-              {tiles[3]}
-            </Box>
-          </Box>
-          <Box
-            className="tile-items__part-item"
-            css={`
-              width: 45%;
-            `}
-          >
-            {tiles[1]}
-          </Box>
-        </Flex>
-        <Box
-          css={`
-            width: 45%;
-          `}
-        >
-          {tiles[2]}
-        </Box>
-      </Flex>
-    )
+  const TilesWithLayout = () => {
+    const mqLg = useMediaQuery(`(min-width:${breakpoints.lg}px)`)
+    const mqMd = useMediaQuery(`(min-width:${breakpoints.md}px)`)
+
+    if (mqLg) return <TilesLarge tiles={tiles} />
+    if (mqMd) return <TilesMedium tiles={tiles} />
+
+    return <TilesSmall tiles={tiles} />
   }
 
-  const TilesSmall = () => {
-    return tiles.map((tile, key) => {
-      return <Box key={items[key].id}>{tile}</Box>
-    })
-  }
-
-  const getTiles = () => {
-    return (
-      <>
-        {useMediaQuery("(max-width:600px)") && <TilesSmall />}
-        {useMediaQuery("(min-width:600px)") && <TilesLarge />}
-      </>
-    )
-  }
-
-  const ModalSlider = () => {
-    return (
-      <Slider
-        // ref={customSlider}
-        current={slideIndex}
-        settings={{
-          // lazy: true,
-          dots: true,
-          infinite: true,
-          focusOnSelect: true,
-          speed: 500,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          swipeToSlide: true,
-          initialSlide: slideIndex,
-        }}
-      >
-        {items.map(item => {
-          const max = "700px"
-          const sizes = { sm: "300px", md: "500px", lg: "700px" }
-          return (
-            <Box
-              key={item.id}
-              className="slide-wrapper"
-              css={`
-                .gatsby-image-wrapper {
-                  margin: auto;
-                  max-width: ${sizes.sm};
-                  max-height: ${sizes.sm};
-                  width: ${sizes.sm};
-                  height: ${sizes.sm};
-                }
-
-                img {
-                  margin: auto;
-                  display: block;
-                  width: auto;
-                  height: auto;
-                }
-
-                @media (min-width: ${breakpoints.md}px) {
-                  .gatsby-image-wrapper {
-                    max-width: ${max};
-                    width: ${max};
-                    max-height: ${max};
-                    height: ${max};
-                  }
-                  img {
-                    max-width: ${max};
-                    max-height: ${max};
-                  }
-                }
-              `}
-            >
-              <Box className="slide-content">
-                <Image data={item.relationships.modal} alt={item.image.alt} />
-                {item.body?.value && (
-                  <div dangerouslySetInnerHTML={{ __html: item.body.value }} />
-                )}
-              </Box>
-            </Box>
-          )
-        })}
-      </Slider>
-    )
+  const seo = {
+    title: page.title,
   }
 
   return (
-    <Layout>
-      <SEO title="Home" />
-      {getTiles()}
-
+    <Layout seo={seo} frontpage>
+      {page.body?.value && (
+        <div dangerouslySetInnerHTML={{ __html: page.body.value }} />
+      )}
+      <TilesWithLayout />
       <Modal
         status={modalStatus}
         setStatus={setModalStatus}
         setModalContent={setModalContent}
       >
-        <ModalSlider />
+        <ModalSlider
+          items={items}
+          slideIndex={slideIndex}
+          setSlideIndex={setSlideIndex}
+        />
       </Modal>
     </Layout>
   )

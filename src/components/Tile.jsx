@@ -1,5 +1,5 @@
 import * as React from "react"
-import { shape, string } from "prop-types"
+import { func, number, shape, string } from "prop-types"
 import { Box, Flex } from "theme-ui"
 import styled from "styled-components"
 import Image from "~components/Image"
@@ -16,7 +16,7 @@ const Inner = styled.div`
 `
 
 const Tile = ({ data, index, setSlideIndex, setModalStatus }) => {
-  const { color, cropped, image, alt } = data
+  const { color, cropped, alt } = data
 
   return (
     <Box
@@ -39,6 +39,17 @@ const Tile = ({ data, index, setSlideIndex, setModalStatus }) => {
       </Inner>
     </Box>
   )
+}
+
+Tile.propTypes = {
+  data: shape({
+    alt: string.isRequired,
+    color: string.isRequired,
+    cropped: shape({}).isRequired,
+  }).isRequired,
+  index: number.isRequired,
+  setModalStatus: func.isRequired,
+  setSlideIndex: func.isRequired,
 }
 
 export default Tile
