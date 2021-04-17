@@ -12,6 +12,7 @@
     "@styled-system/theme-get": "^5.1.2",
     "babel-plugin-styled-components": "^1.12.0",
     "clsx": "^1.1.1",
+    "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "fs-extra": "^9.1.0",
     "gatsby": "^3.1.1",
@@ -61,7 +62,7 @@
   ],
   "license": "0BSD",
   "scripts": {
-    "build": "gatsby build",
+    "build": "cross-env GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages",
     "develop": "gatsby develop",
     "lint": "eslint  --fix src/**/*.js",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
