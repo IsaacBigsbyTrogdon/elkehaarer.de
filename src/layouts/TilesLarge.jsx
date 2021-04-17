@@ -36,7 +36,7 @@ const TilesLarge = ({ tiles }) => {
       className="tile-items"
       css={`
         opacity: 0;
-        transition: opacity 100ms;
+        // transition: opacity 100ms;
         opacity: ${offset > 0 ? 1 : 0};
       `}
     >

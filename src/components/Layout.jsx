@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react"
 import PropTypes from "prop-types"
+import clsx from "clsx"
 import { useStaticQuery, graphql } from "gatsby"
 import { ThemeContext } from "gatsby-plugin-theme-switcher"
 import { useLocation } from "@reach/router"
@@ -10,6 +11,7 @@ import { Box } from "~components/base"
 import styled, { theme as myTheme, themeGet } from "~theme"
 import SEO from "./Seo"
 
+import "~theme/init.css"
 import "normalize.css"
 import "./layout.css"
 import "~theme/styles.sass"
@@ -42,9 +44,9 @@ const Layout = ({ children, frontpage, seo, modalStatus }) => {
         className="body-wrapper"
         css={`font-size ${fontSizes.body};
 
-          @media (min-width: ${breakpoints.lg}px) {
-            padding-left: 50px;
-          }
+          // @media (min-width: ${breakpoints.lg}px) {
+          //   padding-left: 50px;
+          // }
         `}
       >
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
@@ -53,13 +55,20 @@ const Layout = ({ children, frontpage, seo, modalStatus }) => {
         <Box
           p={[3, 4]}
           pt={[0, 0]}
-          className="main-content"
+          as="main"
+          className={clsx({ content: true, frontpage })}
           css={`
             position: relative;
             top: 70px;
 
             @media (min-width: ${breakpoints.md}px) {
               top: 100px;
+              width: 50%;
+              padding-bottom: 100px;
+
+              &.frontpage {
+                width: 100%;
+              }
             }
 
             @media (min-width: ${breakpoints.lg}px) {
@@ -67,15 +76,19 @@ const Layout = ({ children, frontpage, seo, modalStatus }) => {
             }
           `}
         >
-          <Box
+          {/* <Box
             as="main"
             css={`
               height: 100%;
               padding-bottom: 50px;
+
+              @media (min-width: ${breakpoints.md}px) {
+                width: 50%;
+              }
             `}
-          >
-            {children}
-          </Box>
+          > */}
+          {children}
+          {/* </Box> */}
         </Box>
       </Box>
     </>

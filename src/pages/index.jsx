@@ -12,7 +12,9 @@ import Slider from "~components/Slider"
 import { TilesSmall, TilesMedium, TilesLarge } from "~layouts"
 import { cleanString } from "~utils"
 
-const Page = () => {
+const Page = (props) => {
+console.log("🚀 ~ file: index.jsx ~ line 16 ~ Page ~ props", props)
+
   const { page } = useStaticQuery(graphql`
     query homepageQuery {
       site {
@@ -31,26 +33,10 @@ const Page = () => {
             body: field_body {
               value
             }
-            image: field_image {
+            image: field_image_cropped {
               alt
             }
             relationships {
-              image: field_image {
-                id
-                localFile {
-                  childImageSharp {
-                    gatsbyImageData(layout: CONSTRAINED, width: 800)
-                  }
-                }
-              }
-              modal: field_image {
-                id
-                localFile {
-                  childImageSharp {
-                    gatsbyImageData(layout: CONSTRAINED, width: 800)
-                  }
-                }
-              }
               cropped: field_image_cropped {
                 id
                 localFile {
@@ -68,10 +54,12 @@ const Page = () => {
 
   const items = page.relationships?.items || []
 
-  const [slideIndex, setSlideIndex] = React.useState(0)
+  // const [slideIndex, setSlideIndex] = React.useState(0)
 
-  const [modalStatus, setModalStatus] = React.useState(false)
-  const [modalContent, setModalContent] = React.useState(null)
+  const [slidesStatus, setSlidesStatus] = React.useState()
+
+  // const [modalStatus, setModalStatus] = React.useState(false)
+  // const [modalContent, setModalContent] = React.useState(null)
 
   const getTiles = () => {
     return items.map((item, key) => {
@@ -89,8 +77,10 @@ const Page = () => {
           index={key}
           key={item.id}
           data={tile}
-          setSlideIndex={setSlideIndex}
-          setModalStatus={setModalStatus}
+          slidesStatus={slidesStatus}
+          setSlidesStatus={setSlidesStatus}
+          // setSlideIndex={setSlideIndex}
+          // setModalStatus={setModalStatus}
         />,
         item.id,
       ]
@@ -122,15 +112,10 @@ const Page = () => {
       )}
       <Box
         className="tiles-wrapper"
-        css={`
-          // opacity: 1;
-          // transition: opacity 100ms;
-          // opacity: ${modalStatus ? 0 : 1};
-        `}
       >
         <TilesWithLayout />
       </Box>
-      <Modal
+      {/* <Modal
         status={modalStatus}
         setStatus={setModalStatus}
         setModalContent={setModalContent}
@@ -140,7 +125,7 @@ const Page = () => {
           slideIndex={slideIndex}
           setSlideIndex={setSlideIndex}
         />
-      </Modal>
+      </Modal> */}
     </Layout>
   )
 }
