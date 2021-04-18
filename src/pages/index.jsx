@@ -12,9 +12,7 @@ import Slider from "~components/Slider"
 import { TilesSmall, TilesMedium, TilesLarge } from "~layouts"
 import { cleanString } from "~utils"
 
-const Page = (props) => {
-console.log("🚀 ~ file: index.jsx ~ line 16 ~ Page ~ props", props)
-
+const Page = props => {
   const { page } = useStaticQuery(graphql`
     query homepageQuery {
       site {
@@ -110,9 +108,7 @@ console.log("🚀 ~ file: index.jsx ~ line 16 ~ Page ~ props", props)
       {page.body?.value && (
         <div dangerouslySetInnerHTML={{ __html: page.body.value }} />
       )}
-      <Box
-        className="tiles-wrapper"
-      >
+      <Box className="tiles-wrapper">
         <TilesWithLayout />
       </Box>
       {/* <Modal
