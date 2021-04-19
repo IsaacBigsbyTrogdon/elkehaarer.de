@@ -12,8 +12,8 @@ const fastBuild = process.env.GATSBY_FASTBUILD || false
 
 module.exports = {
   siteMetadata: {
-    title: "Elke Haarer",
-    description: "Artist living in Nürnberg, Germany",
+    title: "Paladin Letters",
+    description: "notes on art and architechture edited by elke haarer",
   },
   plugins: [
     {
@@ -89,7 +89,7 @@ module.exports = {
         background_color: "#663399",
         theme_color: "#663399",
         display: "minimal-ui",
-        icon: "src/images/elke_haarer.png", // This path is relative to the root of the site.
+        icon: "src/images/paladin_letters.png",
       },
     },
     "gatsby-plugin-gatsby-cloud",

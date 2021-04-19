@@ -12,7 +12,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { cleanString } from "~utils"
 
 function SEO({ seo }) {
-  const { description, lang, meta, title } = seo
+  const { description, frontpage, lang, meta, title } = seo
 
   const { site } = useStaticQuery(
     graphql`
@@ -28,7 +28,8 @@ function SEO({ seo }) {
   )
 
   const metaDescription = description || site.siteMetadata.description
-  const defaultTitle = site.siteMetadata?.title
+  // const defaultTitle = site.siteMetadata?.title
+  const defaultTitle = null
 
   return (
     <Helmet

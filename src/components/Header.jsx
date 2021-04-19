@@ -7,7 +7,7 @@ import styled, { theme, themeGet } from "~theme"
 
 const { breakpoints, fontSizes, space } = theme
 
-const Header = ({ siteTitle }) => {
+const Header = ({ siteTitle, css }) => {
   const headline = () => (
     <Link to="/">
       <h1>{siteTitle}</h1>
@@ -15,26 +15,8 @@ const Header = ({ siteTitle }) => {
   )
 
   return (
-    <Box
-      className="header-wrapper"
-      as="header"
-      css={`
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 999;
-      `}
-    >
-      <Box
-        className="header-inner"
-        pl={[3, 4, 4]}
-        pt={[2, 3, 4]}
-        css={`
-          margin-left: -5px;
-        `}
-      >
-        {headline()}
-      </Box>
+    <Box className="header-wrapper" as="header">
+      <Box className="header-inner">{headline()}</Box>
     </Box>
   )
 }

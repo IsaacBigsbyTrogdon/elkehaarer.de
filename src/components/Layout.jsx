@@ -7,7 +7,7 @@ import { useLocation } from "@reach/router"
 import Header from "~components/Header"
 import Menu from "./Menu"
 import Switcher from "./Switcher"
-import { Box } from "~components/base"
+import { Box, Flex } from "~components/base"
 import styled, { theme as myTheme, themeGet } from "~theme"
 import SEO from "./Seo"
 
@@ -18,10 +18,12 @@ import "~theme/styles.sass"
 
 const { breakpoints, colors, space, fontSizes } = myTheme
 
-const Layout = ({ children, frontpage, seo, modalStatus }) => {
+const Layout = ({ children, menu, seo, modalStatus }) => {
   const location = useLocation()
+  const frontpage = location.pathname === "/"
+  console.log("🚀 ~ file: Layout.jsx ~ line 24 ~ Layout ~ frontpage", frontpage)
   const { theme, switchTheme } = useContext(ThemeContext)
-  const curTheme = location.pathname === "/" ? "theme-default" : "theme-yellow"
+  const curTheme = "theme-default"
 
   if (typeof document !== "undefined") {
     switchTheme(curTheme)
@@ -41,55 +43,50 @@ const Layout = ({ children, frontpage, seo, modalStatus }) => {
     <>
       <SEO seo={seo} />
       <Box
-        className="body-wrapper"
+        as="main"
+        className={clsx({ "content-wrapper": true, frontpage })}
         css={`font-size ${fontSizes.body};
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          position: relative;
+          height: 100%;
+          min-height: 100%;
 
-          // @media (min-width: ${breakpoints.lg}px) {
-          //   padding-left: 50px;
-          // }
-        `}
-      >
-        <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-        <Menu frontpage={frontpage} />
+          &.frontpage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            overflow: hidden;
 
-        <Box
-          p={[3, 4]}
-          pt={[0, 0]}
-          as="main"
-          className={clsx({ content: true, frontpage })}
-          css={`
-            position: relative;
-            top: 70px;
+            > * {
 
-            @media (min-width: ${breakpoints.md}px) {
-              top: 100px;
-              width: 50%;
-              padding-bottom: 100px;
-
-              &.frontpage {
-                width: 100%;
-              }
+              height: 50%;
             }
 
             @media (min-width: ${breakpoints.lg}px) {
-              top: 120px;
-            }
-          `}
-        >
-          {/* <Box
-            as="main"
-            css={`
-              height: 100%;
-              padding-bottom: 50px;
-
-              @media (min-width: ${breakpoints.md}px) {
-                width: 50%;
+              > * {
+                height: 100%;
               }
-            `}
-          > */}
-          {children}
-          {/* </Box> */}
-        </Box>
+            }
+          }
+
+          > * {
+            flex: 1;
+
+          }
+
+          @media (min-width: ${breakpoints.lg}px) {
+            flex-direction: row;
+            
+            > * {
+              height: 100%;
+            }
+          }
+        `}
+      >
+        {children}
       </Box>
     </>
   )

@@ -2,15 +2,12 @@ import React, { createRef, useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { Box, Flex } from "theme-ui"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
-import ModalSlider from "~components/ModalSlider"
+import Header from "~components/Header"
 import styled, { theme } from "~theme"
-import Tile from "~components/Tile"
-import Image from "~components/Image"
 import Layout from "~components/Layout"
-import Modal from "~components/Modal"
-import Slider from "~components/Slider"
 import { TilesSmall, TilesMedium, TilesLarge } from "~layouts"
 import { cleanString } from "~utils"
+import Image from "~components/Image"
 
 const Page = props => {
   const { page } = useStaticQuery(graphql`
@@ -20,9 +17,25 @@ const Page = props => {
           title
         }
       }
-      page: nodePage(drupal_internal__nid: { eq: 1 }) {
+      page: nodePage(drupal_internal__nid: { eq: 5 }) {
         title
+        image: field_image {
+          alt
+        }
+        headline: field_headline {
+          processed
+        }
+        body {
+          processed
+        }
         relationships {
+          image: field_image {
+            localFile {
+              childImageSharp {
+                gatsbyImageData(layout: CONSTRAINED, width: 800)
+              }
+            }
+          }
           items: field_items {
             id
             color: field_color {
@@ -39,7 +52,9 @@ const Page = props => {
                 id
                 localFile {
                   childImageSharp {
-                    gatsbyImageData(layout: CONSTRAINED, width: 800)
+                    fluid(maxWidth: 1200) {
+                      ...GatsbyImageSharpFluid_withWebp
+                    }
                   }
                 }
               }
@@ -50,78 +65,80 @@ const Page = props => {
     }
   `)
 
-  const items = page.relationships?.items || []
-
-  // const [slideIndex, setSlideIndex] = React.useState(0)
-
-  const [slidesStatus, setSlidesStatus] = React.useState()
-
-  // const [modalStatus, setModalStatus] = React.useState(false)
-  // const [modalContent, setModalContent] = React.useState(null)
-
-  const getTiles = () => {
-    return items.map((item, key) => {
-      const { cropped, image, modal } = item.relationships
-
-      const tile = {
-        color: item.color.color,
-        cropped,
-        image,
-        alt: item.image.alt,
-      }
-
-      return [
-        <Tile
-          index={key}
-          key={item.id}
-          data={tile}
-          slidesStatus={slidesStatus}
-          setSlidesStatus={setSlidesStatus}
-          // setSlideIndex={setSlideIndex}
-          // setModalStatus={setModalStatus}
-        />,
-        item.id,
-      ]
-    })
-  }
+  const { image } = page.relationships
 
   const { breakpoints } = theme
-
-  const tiles = getTiles()
-
-  const TilesWithLayout = () => {
-    const mqLg = useMediaQuery(`(min-width:${breakpoints.lg}px)`)
-    const mqMd = useMediaQuery(`(min-width:${breakpoints.md}px)`)
-
-    if (mqLg) return <TilesLarge tiles={tiles} />
-    if (mqMd) return <TilesMedium tiles={tiles} />
-
-    return <TilesSmall tiles={tiles} />
-  }
+  console.log("🚀 ~ file: index.jsx ~ line 68 ~ breakpoints", breakpoints)
 
   const seo = {
-    title: page.title,
+    title: "Paladin Letters",
+    front: true,
   }
 
   return (
-    <Layout seo={seo} frontpage>
-      {page.body?.value && (
-        <div dangerouslySetInnerHTML={{ __html: page.body.value }} />
-      )}
-      <Box className="tiles-wrapper">
-        <TilesWithLayout />
+    <Layout seo={seo} frontpage menu={false}>
+      <Box as="section" p={[3]} pt={[3]} bt={[0]}>
+        <Box
+          css={`
+            > * {
+              padding-bottom: 5px;
+            }
+          `}
+        >
+          <Link
+            to="/"
+            css={`
+              display: block;
+            `}
+          >
+            <h1>{page.title}</h1>
+          </Link>
+          <Box
+            dangerouslySetInnerHTML={{ __html: page.headline.processed }}
+            css={`
+              *:first-child {
+                padding-bottom: 5px;
+              }
+            `}
+          />
+          <Box
+            dangerouslySetInnerHTML={{ __html: page.body.processed }}
+            css={`
+              p {
+                margin-bottom: 0;
+              }
+              p + p: padding-top: 5px;
+            `}
+          />
+        </Box>
       </Box>
-      {/* <Modal
-        status={modalStatus}
-        setStatus={setModalStatus}
-        setModalContent={setModalContent}
+      <Box
+        as="section"
+        css={`
+          img {
+            display: block;
+          }
+
+          > * {
+            max-height: 100%;
+            height: 100%;
+          }
+          .gatsby-image-wrapper {
+            @media (max-width: ${breakpoints.md}px) {
+            }
+
+            @media (min-width: ${breakpoints.lg}px) {
+            }
+          }
+        `}
       >
-        <ModalSlider
-          items={items}
-          slideIndex={slideIndex}
-          setSlideIndex={setSlideIndex}
+        <Image
+          data={image}
+          alt={page.image.alt}
+          objectFit="cover"
+          objectPosition="50% 50%"
         />
-      </Modal> */}
+      </Box>
     </Layout>
   )
 }
