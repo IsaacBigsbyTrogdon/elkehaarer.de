@@ -46,8 +46,7 @@ const Page = props => {
   const { breakpoints } = theme
 
   const seo = {
-    title: "Paladin Letters",
-    front: true,
+    title: "Impressum | Paladin Letters",
   }
 
   return (

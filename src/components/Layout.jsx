@@ -21,7 +21,7 @@ const { breakpoints, colors, space, fontSizes } = myTheme
 const Layout = ({ children, menu, seo, modalStatus }) => {
   const location = useLocation()
   const frontpage = location.pathname === "/"
-  console.log("🚀 ~ file: Layout.jsx ~ line 24 ~ Layout ~ frontpage", frontpage)
+
   const { theme, switchTheme } = useContext(ThemeContext)
   const curTheme = "theme-default"
 
@@ -61,7 +61,6 @@ const Layout = ({ children, menu, seo, modalStatus }) => {
             overflow: hidden;
 
             > * {
-
               height: 50%;
             }
 

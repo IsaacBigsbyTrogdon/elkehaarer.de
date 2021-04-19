@@ -47,7 +47,7 @@ module.exports = {
       resolve: "gatsby-plugin-theme-switcher",
       options: {
         defaultLightTheme: "theme-default",
-        defaultDarkTheme: "theme-yellow",
+        defaultDarkTheme: "theme-default",
         // minify: true,
       },
     },

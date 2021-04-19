@@ -68,7 +68,6 @@ const Page = props => {
   const { image } = page.relationships
 
   const { breakpoints } = theme
-  console.log("🚀 ~ file: index.jsx ~ line 68 ~ breakpoints", breakpoints)
 
   const seo = {
     title: "Paladin Letters",
