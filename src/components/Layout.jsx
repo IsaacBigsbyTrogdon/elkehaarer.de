@@ -13,7 +13,6 @@ import "./layout.css"
 import "~theme/styles.sass"
 
 const { breakpoints, colors, space, fontSizes } = myTheme
-console.log("🚀 ~ file: Layout.jsx ~ line 16 ~ breakpoints", breakpoints)
 
 const Layout = ({ alt, children, frontpage, image, seo, title }) => {
   return (
