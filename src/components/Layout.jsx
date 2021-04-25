@@ -40,6 +40,16 @@ const Layout = ({ alt, children, styles, frontpage, image, seo, title }) => {
               width: 50%;
             }
           }
+
+          @media (min-width: ${breakpoints.lg}px) {
+            flex-direction: row;
+
+            > * {
+              height: 100%;
+              width: 50%;
+            }
+          }
+
           ${styles}
         `}
       >
