@@ -69,7 +69,17 @@ const Page = () => {
   const getBody = () => page.headline.processed + page.body.processed
 
   return (
-    <Layout seo={seo} image={image} alt={page.image.alt} title={page.title}>
+    <Layout
+      seo={seo}
+      image={image}
+      alt={page.image.alt}
+      title={page.title}
+      styles={`
+        h1 {
+          text-transform: uppercase;
+        }
+      `}
+    >
       <Box
         css={`
           h2 {

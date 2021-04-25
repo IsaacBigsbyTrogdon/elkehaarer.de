@@ -69,20 +69,22 @@ const Page = () => {
   const body = page.body.processed
 
   const title = () => {
-    return (
-      <Text
-        as="h1"
-        css={`
-          text-transform: lowercase;
-        `}
-      >
-        impressum
-      </Text>
-    )
+    return <Text as="h1">Impressum</Text>
   }
 
   return (
-    <Layout seo={seo} image={image} alt={page.image.alt} title={title()}>
+    <Layout
+      seo={seo}
+      image={image}
+      alt={page.image.alt}
+      title={title()}
+      styles={`
+        h1,
+        h2 {
+          text-transform: lowercase;
+        }
+      `}
+    >
       <Box dangerouslySetInnerHTML={{ __html: body }} />
     </Layout>
   )

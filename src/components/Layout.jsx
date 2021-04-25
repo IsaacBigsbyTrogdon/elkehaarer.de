@@ -14,7 +14,7 @@ import "~theme/styles.sass"
 
 const { breakpoints, colors, space, fontSizes } = myTheme
 
-const Layout = ({ alt, children, frontpage, image, seo, title }) => {
+const Layout = ({ alt, children, styles, frontpage, image, seo, title }) => {
   return (
     <>
       <SEO seo={seo} />
@@ -40,6 +40,7 @@ const Layout = ({ alt, children, frontpage, image, seo, title }) => {
               width: 50%;
             }
           }
+          ${styles}
         `}
       >
         <Box
