@@ -1,6 +1,6 @@
 import React, { createRef, useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
-import { Box, Flex } from "theme-ui"
+import { Box, Flex, Text } from "theme-ui"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 import Header from "~components/Header"
 import styled, { theme } from "~theme"
@@ -9,7 +9,7 @@ import { TilesSmall, TilesMedium, TilesLarge } from "~layouts"
 import { cleanString } from "~utils"
 import Image from "~components/Image"
 
-const Page = props => {
+const Page = () => {
   const { page } = useStaticQuery(graphql`
     query homepageQuery {
       site {
@@ -67,77 +67,26 @@ const Page = props => {
 
   const { image } = page.relationships
 
-  const { breakpoints } = theme
-
   const seo = {
     title: "Paladin Letters",
     front: true,
   }
 
+  const getBody = () => page.headline.processed + page.body.processed
+
   return (
-    <Layout seo={seo} frontpage menu={false}>
-      <Box as="section" p={[3]} pt={[3]} bt={[0]}>
-        <Box
-          css={`
-            > * {
-              padding-bottom: 5px;
-            }
-          `}
-        >
-          <Link
-            to="/"
-            css={`
-              display: block;
-            `}
-          >
-            <h1>{page.title}</h1>
-          </Link>
-          <Box
-            dangerouslySetInnerHTML={{ __html: page.headline.processed }}
-            css={`
-              *:first-child {
-                padding-bottom: 5px;
-              }
-            `}
-          />
-          <Box
-            dangerouslySetInnerHTML={{ __html: page.body.processed }}
-            css={`
-              p {
-                margin-bottom: 0;
-              }
-              p + p: padding-top: 5px;
-            `}
-          />
-        </Box>
-      </Box>
+    <Layout seo={seo} image={image} alt={page.image.alt} title={page.title}>
       <Box
-        as="section"
         css={`
-          img {
-            display: block;
+          h2 {
+            margin-bottom: 0;
           }
-
-          > * {
-            max-height: 100%;
-            height: 100%;
-          }
-          .gatsby-image-wrapper {
-            @media (max-width: ${breakpoints.md}px) {
-            }
-
-            @media (min-width: ${breakpoints.lg}px) {
-            }
+          p {
+            margin-top: 0;
           }
         `}
-      >
-        <Image
-          data={image}
-          alt={page.image.alt}
-          objectFit="cover"
-          objectPosition="50% 50%"
-        />
-      </Box>
+        dangerouslySetInnerHTML={{ __html: getBody() }}
+      />
     </Layout>
   )
 }

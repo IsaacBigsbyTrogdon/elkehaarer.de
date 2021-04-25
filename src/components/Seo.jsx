@@ -28,8 +28,7 @@ function SEO({ seo }) {
   )
 
   const metaDescription = description || site.siteMetadata.description
-  // const defaultTitle = site.siteMetadata?.title
-  const defaultTitle = null
+  const defaultTitle = site.siteMetadata?.title
 
   return (
     <Helmet
@@ -37,7 +36,7 @@ function SEO({ seo }) {
         lang,
       }}
       title={cleanString(title)}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      titleTemplate={!frontpage ? `%s | ${defaultTitle}` : defaultTitle}
       // meta={[
       //   {
       //     name: `description`,
