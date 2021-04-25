@@ -1,13 +1,7 @@
-import React, { createRef, useState } from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
-import { Box, Flex, Text } from "theme-ui"
-import useMediaQuery from "@material-ui/core/useMediaQuery"
-import Header from "~components/Header"
-import styled, { theme } from "~theme"
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import { Box } from "theme-ui"
 import Layout from "~components/Layout"
-import { TilesSmall, TilesMedium, TilesLarge } from "~layouts"
-import { cleanString } from "~utils"
-import Image from "~components/Image"
 
 const Page = () => {
   const { page } = useStaticQuery(graphql`
@@ -69,7 +63,7 @@ const Page = () => {
 
   const seo = {
     title: "Paladin Letters",
-    front: true,
+    frontpage: true,
   }
 
   const getBody = () => page.headline.processed + page.body.processed

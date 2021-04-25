@@ -36,7 +36,7 @@ function SEO({ seo }) {
         lang,
       }}
       title={cleanString(title)}
-      titleTemplate={!frontpage ? `%s | ${defaultTitle}` : defaultTitle}
+      titleTemplate={frontpage ? defaultTitle : `%s | ${defaultTitle}`}
       // meta={[
       //   {
       //     name: `description`,

@@ -1,14 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 import clsx from "clsx"
-import { Link, useStaticQuery, graphql } from "gatsby"
-import { ThemeContext } from "gatsby-plugin-theme-switcher"
-import { useLocation } from "@reach/router"
-import Header from "~components/Header"
-import Menu from "./Menu"
-import Switcher from "./Switcher"
+import { Link } from "gatsby"
 import { Box, Flex } from "~components/base"
-import styled, { theme as myTheme, themeGet } from "~theme"
+import styled, { theme as myTheme } from "~theme"
 import SEO from "./Seo"
 import Image from "~components/Image"
 
@@ -18,39 +13,49 @@ import "./layout.css"
 import "~theme/styles.sass"
 
 const { breakpoints, colors, space, fontSizes } = myTheme
+console.log("🚀 ~ file: Layout.jsx ~ line 16 ~ breakpoints", breakpoints)
 
 const Layout = ({ alt, children, frontpage, image, seo, title }) => {
   return (
     <>
       <SEO seo={seo} />
-      <Box
+      <Flex
         as="main"
         css={`
           min-height: 100%;
           height: 100%;
           font-size ${fontSizes.body};
-          display: flex;
           flex-direction: column;
           
           > * {
-            height: 50%;
             flex: 1;
+            height: 50%;
+            width: 100%;
           }
+          
+          @media (min-aspect-ratio: 1/1) {
+            flex-direction: row;
 
-          // height: 100%;
-          @media (min-width: ${breakpoints.lg}px) {
+            > * {
+              height: 100%;
+              width: 50%;
+            }
           }
         `}
       >
         <Box
           css={`
-            overflow: scroll;
+            overflow: auto;
           `}
         >
           <Box
             as="section"
             css={`
               padding: ${space[3]}px;
+
+              @media (min-width: ${breakpoints.md}px) {
+                padding: ${space[4]}px;
+              }
             `}
           >
             <header>
@@ -70,11 +75,16 @@ const Layout = ({ alt, children, frontpage, image, seo, title }) => {
           as="figure"
           css={`
             overflow: hidden;
+
+            > * {
+              width: 100%;
+              height: 100%;
+            }
           `}
         >
           <Image data={image} alt={alt} objectFit="cover" />
         </Box>
-      </Box>
+      </Flex>
     </>
   )
 }

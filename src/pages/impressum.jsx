@@ -1,4 +1,4 @@
-import React, { createRef, useState } from "react"
+import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { Box, Flex, Text } from "theme-ui"
 
