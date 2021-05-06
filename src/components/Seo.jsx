@@ -12,7 +12,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { cleanString } from "~utils"
 
 function SEO({ seo }) {
-  const { description, lang, meta, title } = seo
+  const { description, frontpage, lang, meta, title } = seo
 
   const { site } = useStaticQuery(
     graphql`
@@ -36,7 +36,7 @@ function SEO({ seo }) {
         lang,
       }}
       title={cleanString(title)}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      titleTemplate={!frontpage ? `%s | ${defaultTitle}` : null}
       // meta={[
       //   {
       //     name: `description`,

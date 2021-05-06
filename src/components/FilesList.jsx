@@ -1,6 +1,5 @@
 import React from "react"
 import { arrayOf, shape, string } from "prop-types"
-import { Link } from "gatsby"
 import { List } from "~components/base"
 import styled from "~theme"
 
@@ -12,9 +11,9 @@ export default function FilesList({ files }) {
       {files.map(file => {
         return (
           <File key={file.id}>
-            <Link to={file.to} download>
+            <a href={file.to} download>
               {`${file.name} > Download ${file.extension} ${file.size}`}
-            </Link>
+            </a>
           </File>
         )
       })}

@@ -40,6 +40,7 @@ const Page = () => {
       }
     }
   `)
+  console.log("🚀 ~ file: documentation.jsx ~ line 14 ~ Page ~ page", page)
 
   const getFiles = () => {
     return (
@@ -78,6 +79,7 @@ const Page = () => {
         `}
       >
         <FilesList files={getFiles() || []} />
+        <div dangerouslySetInnerHTML={{ __html: page.body.value }} />
       </Box>
     </Layout>
   )

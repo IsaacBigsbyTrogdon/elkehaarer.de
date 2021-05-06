@@ -9,7 +9,7 @@ const {
   css,
   createGlobalStyle,
   keyframes,
-  ThemeProvider,
+  // ThemeProvider,
 } = styledComponents
 
 export {
@@ -17,7 +17,7 @@ export {
   variant,
   createGlobalStyle,
   keyframes,
-  ThemeProvider,
+  // ThemeProvider,
   theme,
   themeGet,
   propTypes,

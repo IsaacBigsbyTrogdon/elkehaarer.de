@@ -24,7 +24,7 @@ const Layout = ({ children, frontpage, seo, modalStatus }) => {
   const curTheme = location.pathname === "/" ? "theme-default" : "theme-yellow"
 
   if (typeof document !== "undefined") {
-    switchTheme(curTheme)
+    // switchTheme(curTheme)
   }
 
   const data = useStaticQuery(graphql`
@@ -44,9 +44,7 @@ const Layout = ({ children, frontpage, seo, modalStatus }) => {
         className="body-wrapper"
         css={`font-size ${fontSizes.body};
 
-          // @media (min-width: ${breakpoints.lg}px) {
-          //   padding-left: 50px;
-          // }
+
         `}
       >
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />

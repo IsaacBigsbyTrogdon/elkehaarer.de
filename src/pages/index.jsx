@@ -69,7 +69,6 @@ const Page = props => {
         image,
         alt: item.image.alt,
       }
-
       return [
         <Tile
           index={key}
@@ -100,7 +99,8 @@ const Page = props => {
   }
 
   const seo = {
-    title: page.title,
+    title: "Elke Haarer",
+    frontpage: true,
   }
 
   return (
@@ -111,17 +111,6 @@ const Page = props => {
       <Box className="tiles-wrapper">
         <TilesWithLayout />
       </Box>
-      {/* <Modal
-        status={modalStatus}
-        setStatus={setModalStatus}
-        setModalContent={setModalContent}
-      >
-        <ModalSlider
-          items={items}
-          slideIndex={slideIndex}
-          setSlideIndex={setSlideIndex}
-        />
-      </Modal> */}
     </Layout>
   )
 }
