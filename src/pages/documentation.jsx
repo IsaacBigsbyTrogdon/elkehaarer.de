@@ -40,7 +40,6 @@ const Page = () => {
       }
     }
   `)
-  console.log("🚀 ~ file: documentation.jsx ~ line 14 ~ Page ~ page", page)
 
   const getFiles = () => {
     return (
@@ -67,14 +66,14 @@ const Page = () => {
       <Box
         width={3}
         css={`
-          width: 75%;
+          // width: 75%;
 
           li + li {
             padding-top: 10px;
           }
 
           @media (min-width: ${breakpoints.sm}px) {
-            width: inherit;
+            // width: inherit;
           }
         `}
       >

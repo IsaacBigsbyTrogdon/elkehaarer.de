@@ -16,8 +16,10 @@ const TilesLarge = ({ tiles }) => {
 
   useLayoutEffect(() => {
     function updatePosition() {
-      const pos1 = refOffset_1.current.getBoundingClientRect().bottom
-      const pos2 = refOffset_2.current.getBoundingClientRect().bottom
+      const pos1 =
+        refOffset_1 && refOffset_1.current.getBoundingClientRect().bottom
+      const pos2 =
+        refOffset_2 && refOffset_2.current.getBoundingClientRect().bottom
       const getCur = () => {
         if (!pos1 || !pos2) return null
         return pos1 - pos2 - space[3]

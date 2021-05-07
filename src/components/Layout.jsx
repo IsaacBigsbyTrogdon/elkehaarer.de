@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import clsx from "clsx"
 import { useStaticQuery, graphql } from "gatsby"
@@ -23,9 +23,11 @@ const Layout = ({ children, frontpage, seo, modalStatus }) => {
   const { theme, switchTheme } = useContext(ThemeContext)
   const curTheme = location.pathname === "/" ? "theme-default" : "theme-yellow"
 
-  if (typeof document !== "undefined") {
-    // switchTheme(curTheme)
-  }
+  useEffect(() => {
+    switchTheme(curTheme)
+  }, [curTheme])
+  // if (typeof document !== "undefined") {
+  // }
 
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {

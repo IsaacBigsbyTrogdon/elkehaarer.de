@@ -31,7 +31,7 @@ const MenuListItem = styled(ListItem)`
     padding-top: 15px;
   }
 
-  @media (min-width: ${breakpoints.md}px) {
+  @media (min-width: ${breakpoints.sm}px) {
     background-color: white;
 
     &.frontpage {
