@@ -11,7 +11,12 @@ export default function FilesList({ files }) {
       {files.map(file => {
         return (
           <File key={file.id}>
-            <a href={file.to} download>
+            <a
+              href={file.to}
+              // download
+              target="_blank"
+              rel="noreferrer"
+            >
               {`${file.name} > Download ${file.extension} ${file.size}`}
             </a>
           </File>
