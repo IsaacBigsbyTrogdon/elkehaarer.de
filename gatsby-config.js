@@ -63,13 +63,6 @@ module.exports = {
     `gatsby-plugin-styled-components`,
     "gatsby-plugin-theme-ui",
     "gatsby-plugin-sass",
-    {
-      resolve: `gatsby-plugin-google-fonts`,
-      options: {
-        fonts: ["sen", "open sans"],
-        display: "swap",
-      },
-    },
     "gatsby-plugin-image",
     {
       resolve: "gatsby-source-filesystem",
